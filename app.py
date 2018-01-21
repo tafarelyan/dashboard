@@ -1,21 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, jsonify, render_template
 
 app = Flask(__name__)
 
+
 @app.route('/')
-def home():
-    payload = {
-        'type': 'line',
-        'data': {
-            'labels': ['One', 'Two', 'Three', 'Four', 'Five'],
-            'datasets': [{
-                'label': 'Test Line Chart',
-                'data': [1, 2, 3, 4, 5]
-            }],
-        },
-        'options': '',
+def index():
+    data = {
+        'name': 'Tafarel',
+        'age': 23,
     }
-    return render_template('index.html', payload=payload)
+    return jsonify(data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
