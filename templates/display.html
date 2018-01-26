@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Display csv</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  </head>
+
+  <body>
+    <h1>{{ filename }}</h1>
+
+    {% for row in data %}
+      <p>
+      {% for x in row %}
+        {{ x }}
+      {% endfor %}
+      </p>
+    {% endfor %}
+
+    <div id='root'></div>
+
+    <script type="text/jsx">
+      ReactDOM.render(
+        <h1>Hello, world!</h1>,
+        document.getElementById('root')
+      );
+    </script>
+  </body>
+
+</html>

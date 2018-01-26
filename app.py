@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -33,7 +33,7 @@ def upload_file(filename=None):
             filename = secure_filename(f.filename)
             f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             print('upload successfull')
-            return redirect(url_for('upload_file', filename=filename))
+            return redirect(url_for('display_csv', filename=filename))
 
     return '''
     <!DOCTYPE html>
@@ -44,6 +44,15 @@ def upload_file(filename=None):
         <input type=submit value=Upload>
     </form>
     '''
+
+@app.route('/uploaded/<filename>')
+def display_csv(filename=None):
+    sep = ','
+
+    with open(os.path.join(app.config['UPLOAD_FOLDER'], filename)) as f:
+        data = [row.split(sep) for row in f.read().strip().split('\n')]
+
+    return render_template('display.html', filename=filename, data=data)
 
 
 if __name__ == '__main__':
